@@ -1,0 +1,14 @@
+{
+  "extends": "solium:recommended",
+  "plugins": [
+    "security"
+  ],
+  "rules": {
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "indentation": ["error", 2],
+    "security/no-block-members": "off"
+  }
+}

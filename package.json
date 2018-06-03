@@ -1,0 +1,35 @@
+{
+  "name": "OracleEscrow",
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "contracts",
+    "test"
+  ],
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint . --fix",
+    "lint:sol": "./node_modules/.bin/solium -d .",
+    "lint:sol:fix": "./node_modules/.bin/solium -d . --fix",
+    "lint:all": "npm run lint && npm run lint:sol",
+    "lint:all:fix": "npm run lint:fix && npm run lint:sol:fix"
+  },
+  "author": "Thomas Hodges (thomas@smartcontract.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "ethereumjs-util": "^5.1.5",
+    "ganache-cli": "^6.1.0",
+    "solium": "^1.1.7",
+    "truffle": "^4.1.11",
+    "web3": "^1.0.0-beta.29"
+  },
+  "dependencies": {
+    "openzeppelin-solidity": "^1.9.0"
+  }
+}
