@@ -47,7 +47,7 @@ contract("OracleEscrow", () => {
   });
 
   it("stores the expected value", async function () {
-    const value = await oracleEscrow.expected();
+    const value = await oracleEscrow.EXPECTED();
     assert.equal("yes", web3.toUtf8(value));
   });
 
@@ -100,8 +100,25 @@ contract("OracleEscrow", () => {
 
   describe("#requestOracleValue", () => {
     it("can read the oracle contract value", async function () {
-      const value = await oracleEscrow.requestOracleValue();
+      const value = await oracleEscrow.requestOracleValue({
+        from: owner
+      });
       assert.equal("no", web3.toUtf8(value));
+    });
+
+    it("can only be called by owner", async function () {
+      const depositorRead = await tryCatch(oracleEscrow.requestOracleValue({
+        from: depositor
+      }), errTypes.revert);
+      assert.equal(undefined, depositorRead);
+      const beneficiaryRead = await tryCatch(oracleEscrow.requestOracleValue({
+        from: beneficiary
+      }), errTypes.revert);
+      assert.equal(undefined, beneficiaryRead);
+      const strangerRead = await tryCatch(oracleEscrow.requestOracleValue({
+        from: stranger
+      }), errTypes.revert);
+      assert.equal(undefined, strangerRead);
     });
 
     it("does not accept payment", async function () {
@@ -176,7 +193,7 @@ contract("OracleEscrow", () => {
       await placeDeposit();
       await oracleContract.update("yes");
       const value = await oracleEscrow.requestOracleValue();
-      const expected = await oracleEscrow.expected();
+      const expected = await oracleEscrow.EXPECTED();
       assert.equal(web3.toUtf8(expected), web3.toUtf8(value));
       const beneficiaryStartBalance = await web3.eth.getBalance(beneficiary);
       await oracleEscrow.executeContract({
@@ -192,7 +209,7 @@ contract("OracleEscrow", () => {
       await placeDeposit();
       await oracleContract.update("yes");
       const value = await oracleEscrow.requestOracleValue();
-      const expected = await oracleEscrow.expected();
+      const expected = await oracleEscrow.EXPECTED();
       assert.equal(web3.toUtf8(expected), web3.toUtf8(value));
       await increaseTime();
       const beneficiaryStartBalance = await web3.eth.getBalance(beneficiary);

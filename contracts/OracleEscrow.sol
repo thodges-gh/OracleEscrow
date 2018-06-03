@@ -80,7 +80,7 @@ contract OracleEscrow is Ownable {
    * @dev Check the current value stored on the Oracle contract.
    * @return The current value at the Oracle contract.
    */
-  function requestOracleValue() public view returns(bytes32) {
+  function requestOracleValue() public view onlyOwner returns(bytes32) {
     return oracle.current();
   }
 
